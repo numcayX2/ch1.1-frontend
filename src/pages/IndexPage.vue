@@ -34,6 +34,20 @@
         </q-list>
       </q-card-section>
     </q-card>
+
+    <q-card class="q-mt-md">
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference</div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(cmd, index) in dockerCommands" :key="index">
+            <q-item-section>
+              <q-item-label><code>{{ cmd.command }}</code></q-item-label>
+              <q-item-label caption>{{ cmd.detail }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -77,6 +91,33 @@ const dockerItems = [
   {
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
+  },
+]
+
+const dockerCommands = [
+  {
+    command: 'docker build -t my-quasar-frontend:latest .',
+    detail: 'ใช้เมื่อต้องการสร้าง image ใหม่จาก Dockerfile หลังแก้โค้ดหรือแก้ Dockerfile',
+  },
+  {
+    command: 'docker run -d -p 8080:80 --name my-quasar-frontend-container my-quasar-frontend:latest',
+    detail: 'ใช้เมื่อต้องการรัน container จาก image ในเบื้องหลัง และเปิดพอร์ต 8080 ของเครื่องไปยังพอร์ต 80 ของ Nginx',
+  },
+  {
+    command: 'docker ps',
+    detail: 'ใช้เมื่อต้องการดูว่ามี container ใดกำลังทำงานอยู่ พร้อมสถานะและพอร์ตที่เปิด',
+  },
+  {
+    command: 'docker rm -f my-quasar-frontend-container',
+    detail: 'ใช้เมื่อต้องการหยุดและลบ container เพื่อคืนพอร์ต 8080 ก่อนรันใหม่หรือก่อนใช้ Compose',
+  },
+  {
+    command: 'docker compose up -d --build',
+    detail: 'ใช้เมื่อต้องการ build และรันทุกบริการที่กำหนดใน docker-compose.yml ในคำสั่งเดียว',
+  },
+  {
+    command: 'docker compose down',
+    detail: 'ใช้เมื่อเลิกใช้งาน เพื่อหยุดและลบ container และ network ที่ Compose สร้างขึ้น',
   },
 ]
 </script>
